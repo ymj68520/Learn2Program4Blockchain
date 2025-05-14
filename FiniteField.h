@@ -12,6 +12,13 @@ private:
 
 public:
 	// Constructor:
+	FiniteFieldElement() : value(0), prime(1) {} // Default constructor
+	// Constructor with prime:
+	FiniteFieldElement(int prime) : value(0), prime(prime) {
+		if (prime <= 1) {
+			throw std::invalid_argument("prime must be greater than 1");
+		}
+	}
 	// Creates a finite field element with the given value and prime.
 	FiniteFieldElement(int num, int prime) {
 		if (num < 0 || num >= prime) {
@@ -26,10 +33,64 @@ public:
 		prime = 0;
 	}
 
-	// Equality operator:
-	/*bool __eq__(const FiniteFieldElement& other) const {
-		return value == other.value && prime == other.prime;
-	}*/
+	// Copy constructor:
+	FiniteFieldElement(const FiniteFieldElement& other) {
+		value = other.value;
+		prime = other.prime;
+	}
+	// Copy assignment operator:
+	FiniteFieldElement& operator=(const FiniteFieldElement& other) {
+		if (this != &other) {
+			value = other.value;
+			prime = other.prime;
+		}
+		return *this;
+	}
+
+	// Addition, subtraction, multiplication, and division operators:
+	FiniteFieldElement operator+(const FiniteFieldElement& other) const {
+		return FiniteFieldElement((value + other.getValue()) % prime, prime);
+	}
+	FiniteFieldElement operator+(const int scalar) const {
+		return FiniteFieldElement((value + scalar) % prime, prime);
+	}
+	FiniteFieldElement operator-(const FiniteFieldElement& other) const {
+		return FiniteFieldElement((value - other.getValue() + prime) % prime, prime);
+	}
+	FiniteFieldElement operator-(const int scalar) const {
+		return FiniteFieldElement((value - scalar + prime) % prime, prime);
+	}
+	FiniteFieldElement operator*(const FiniteFieldElement& other) const {
+		return FiniteFieldElement((value * other.getValue()) % prime, prime);
+	}
+	FiniteFieldElement operator*(const int scalar) const {
+		return FiniteFieldElement((value * scalar) % prime, prime);
+	}
+	FiniteFieldElement operator/(const FiniteFieldElement& other) const {
+		return *this * other.Inverse();
+	}
+	FiniteFieldElement operator/(const int scalar) const {
+		return *this * FiniteFieldElement(scalar, prime).Inverse();
+	}
+
+	// modulus operator:
+	FiniteFieldElement operator%(const int prime) const {
+		return FiniteFieldElement(value % prime, prime);
+	}
+
+	// Comparison operators:
+	bool operator<(const FiniteFieldElement& other) const {
+		return value < other.getValue();
+	}
+	bool operator<(const int scalar) const {
+		return value < scalar;
+	}
+	bool operator>(const FiniteFieldElement& other) const {
+		return value > other.getValue();
+	}
+	bool operator>(const int scalar) const {
+		return value > scalar;
+	}
 	bool operator==(const FiniteFieldElement& other) const {
 		// Lambda function to check equality of two FiniteFieldElement objects.
 		// It compares both the value and the prime of the current object (*this)
@@ -48,19 +109,6 @@ public:
 			return value != other.getValue() || prime != other.getPrime();
 			};
 		return __ne__(other);
-	}
-	// Addition, subtraction, multiplication, and division operators:
-	FiniteFieldElement operator+(const FiniteFieldElement& other) const {
-		return FiniteFieldElement((value + other.getValue()) % prime, prime);
-	}
-	FiniteFieldElement operator-(const FiniteFieldElement& other) const {
-		return FiniteFieldElement((value - other.getValue() + prime) % prime, prime);
-	}
-	FiniteFieldElement operator*(const FiniteFieldElement& other) const {
-		return FiniteFieldElement((value * other.getValue()) % prime, prime);
-	}
-	FiniteFieldElement operator/(const FiniteFieldElement& other) const {
-		return *this * other.Inverse();
 	}
 
 	// Power function:
