@@ -23,7 +23,7 @@ private:
 
 		//if (r > 1) throw std::invalid_argument("Value has no modular inverse");
 		if (r > 1) std::cout << "Warning: Value has no modular inverse" << std::endl;
-		while (t < 0) t += mod;
+		while (t < 0) t = t + mod;
 
 		return t;
 	}
@@ -38,6 +38,10 @@ public:
 	Point(T x, T y, int a, int b, int p) : x(x), y(y), a(a), b(b), prime(p), isInfinity(false) {
 		// Check if the point satisfies the elliptic curve equation y^2 = x^3 + ax + b
 		//try {
+		if (x == 0 && y == 0) {
+			isInfinity = true; // If x and y are both 0, it's a point at infinity
+			return;
+		}
 		if ((y * y) % prime != (x * x * x + x * a + b) % prime) {
 			isInfinity = false; // Otherwise, it's a finite point
 			std::cout << "Warning: Point: (" << x << ", " << y << ") does not satisfy the elliptic curve equation" << std::endl;
@@ -47,7 +51,6 @@ public:
 			std::cerr << "Exception caught: " << e.what() << std::endl;
 		}*/
 	} // Constructor for finite point
-	Point(int a, int b, int prime) : x(0), y(0), a(a), b(b), prime(prime), isInfinity(true) {} // Constructor for point at infinity
 	//Point(T x, T y, int prime) : x(x), y(y), a(0), b(7), prime(prime), isInfinity(false) {
 	//	// Check if the point satisfies the elliptic curve equation y^2 = x^3 + ax + b
 	//	if ((y * y) % prime != (x * x * x + x * a + b) % prime) {
@@ -127,18 +130,18 @@ public:
 
 		// If both points are the same
 		if (x == other.x && y == other.y) {
-			if (y == 0) return Point(a, b, prime); // If y is 0, return point at infinity
+			if (y == 0) return Point(T(), T(), a, b, prime); // If y is 0, return point at infinity
 			T slope = (3 * x * x + a) * modInverse(2 * y, prime) % prime; // Calculate slope
 			T x3 = (slope * slope - 2 * x) % prime; // Calculate x-coordinate of the result
 			T y3 = (slope * (x - x3) - y) % prime; // Calculate y-coordinate of the result
 			// Check if the result is negative
-			if (y3 < 0) y3 += prime; // Ensure y-coordinate is positive
-			if (x3 < 0) x3 += prime; // Ensure x-coordinate is positive
+			if (y3 < 0) y3 = y3 + prime; // Ensure y-coordinate is positive
+			if (x3 < 0) x3 = x3 + prime; // Ensure x-coordinate is positive
 			return Point(x3, y3, a, b, prime); // Return the resulting point
 		}
 
 		// If the points are negatives of each other, return point at infinity
-		if (y == (0 - other.y)) return Point(a, b, prime);
+		if (y == (0 - other.y)) return Point(T(), T(), a, b, prime);
 
 		// infinity point
 		if (isInfinity) return other; // If this point is at infinity, return the other point
@@ -149,8 +152,8 @@ public:
 		T x3 = (slope * slope - x - other.x) % prime; // Calculate x-coordinate of the result
 		T y3 = (slope * (x - x3) - y) % prime; // Calculate y-coordinate of the result
 		// Check if the result is negative
-		if (y3 < 0) y3 += prime; // Ensure y-coordinate is positive
-		if (x3 < 0) x3 += prime; // Ensure x-coordinate is positive
+		if (y3 < 0) y3 = y3 + prime; // Ensure y-coordinate is positive
+		if (x3 < 0) x3 = x3 + prime; // Ensure x-coordinate is positive
 		return Point(x3, y3, a, b, prime); // Return the resulting point
 	}
 
@@ -159,16 +162,16 @@ public:
 		/*if (!checkCurve(other)) {
 			throw std::invalid_argument("Points are not on the same curve");
 		}*/
-		if (x == other.x && y == other.y) return Point(a, b, prime); // If both points are the same, return point at infinity
+		if (x == other.x && y == other.y) return Point(T(), T(), a, b, prime); // If both points are the same, return point at infinity
 
 		return Point(other.x, (0 - other.y) % prime, a, b, prime); // Return the negation of the point
 	}
 
 	Point operator*(int scalar) const {
-		if (scalar == 0) return Point(a, b, prime); // If scalar is 0, return point at infinity
+		if (scalar == 0) return Point(T(), T(), a, b, prime); // If scalar is 0, return point at infinity
 		if (scalar == 1) return *this; // If scalar is 1, return the point itself
 		//if (scalar < 0) return -(*this) * (-scalar); // If scalar is negative, negate the point and multiply by positive scalar
-		Point result = Point(a, b, prime); // Start with the current point
+		Point result = Point(T(), T(), a, b, prime); // Start with the current point
 		Point addend = *this; // Start with the current point as the addend
 		while (scalar > 1) {
 			if (scalar % 2 == 0) {

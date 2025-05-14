@@ -5,23 +5,27 @@
 using namespace std;
 
 void eccTest() {
+	int prime = 223;
 	// Example usage of the FiniteFieldElement class
-	FiniteFieldElement a(3, 7);
-	FiniteFieldElement b(5, 7);
-	FiniteFieldElement c = a + b;
-	cout << "a + b = " << c.getValue() << endl;
+	FiniteFieldElement x(47, prime);
+	FiniteFieldElement y(71, prime);
+	FiniteFieldElement c = x + y;
+	cout << "x + y = " << c.getValue() << endl;
 	// Example usage of the Point class
-	Point<int> p1 = Point<int>(3, 6, 2, 3, 7);
-	Point<int> p2 = Point<int>(2, 1, 2, 3, 7);
-	Point<int> p4 = Point<int>(47, 71, 0, 7, 223);
+	Point<int> p1 = Point<int>(192, 105, 0, 7, prime);
+	Point<int> p2 = Point<int>(17, 56, 0, 7, prime);
+	Point<int> p4 = Point<int>(47, 71, 0, 7, prime);
 	Point<int> p3 = p1 + p2;
+	Point<FiniteFieldElement> p5 = Point<FiniteFieldElement>(x, y, 0, 7, prime);
+	cout << "N * p4:                         N * p5: " << endl;
 	for (int i = 1; i < 21; i++) {
-		cout << i << " * p4 = " << "(" << (p4 * i).x << ", " << (p4 * i).y << ")" << endl;
+		cout << i << " * p4 = " << "(" << (p4 * i).x << ", " << (p4 * i).y << ")" << " \tendl \t";
+		cout << i << " * p5 = " << "(" << (p5 * i).x.getValue() << ", " << (p5 * i).y.getValue() << ")" << endl;
 	}
+
 	cout << "p1 + p2 = (" << p3.x << ", " << p3.y << ")" << endl << "²¿¼þ²âÊÔ½áÊø" << endl;
 
 	// Example usage of the ECC class
-	int prime = 223;
 	vector<vector<int>> valid_point = {
 		{192, 105},
 		{17, 56},
@@ -35,7 +39,7 @@ void eccTest() {
 	vector<Point<FiniteFieldElement>> points;
 	for (const auto& point : valid_point) {
 		if (point[0] == 0 && point[1] == 0) {
-			points.push_back(Point<FiniteFieldElement>(FiniteFieldElement(prime), FiniteFieldElement(prime), 0, 7, prime));
+			points.push_back(Point<FiniteFieldElement>(FiniteFieldElement(0, prime), FiniteFieldElement(0, prime), 0, 7, prime));
 			continue;
 		}
 		auto x = FiniteFieldElement(point[0], prime);

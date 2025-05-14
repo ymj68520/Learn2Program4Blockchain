@@ -8,16 +8,15 @@ private:
 	// The value of the element in the finite field
 	int value;
 	// The prime number that defines the finite field
-	int prime;
+	int prime = 223;
 
 public:
 	// Constructor:
-	FiniteFieldElement() : value(0), prime(1) {} // Default constructor
+	FiniteFieldElement() : value(0) {} // Default constructor
 	// Constructor with prime:
-	FiniteFieldElement(int prime) : value(0), prime(prime) {
-		if (prime <= 1) {
-			throw std::invalid_argument("prime must be greater than 1");
-		}
+	FiniteFieldElement(int value) : value(value) {
+		while (value < 0) value += prime;
+		while (value >= prime) value -= prime;
 	}
 	// Creates a finite field element with the given value and prime.
 	FiniteFieldElement(int num, int prime) {
@@ -27,12 +26,6 @@ public:
 		this->value = num;
 		this->prime = prime;
 	}
-	// Destructor:
-	~FiniteFieldElement() {
-		value = INT_MIN;
-		prime = 0;
-	}
-
 	// Copy constructor:
 	FiniteFieldElement(const FiniteFieldElement& other) {
 		value = other.value;
@@ -46,6 +39,17 @@ public:
 		}
 		return *this;
 	}
+	FiniteFieldElement& operator= (const int scalar) {
+		value = scalar;
+
+		while (value < 0) value += prime;
+		while (value >= prime) value -= prime;
+
+		return *this;
+	}
+	operator int() const {
+		return value;
+	}
 
 	// Addition, subtraction, multiplication, and division operators:
 	FiniteFieldElement operator+(const FiniteFieldElement& other) const {
@@ -54,17 +58,26 @@ public:
 	FiniteFieldElement operator+(const int scalar) const {
 		return FiniteFieldElement((value + scalar) % prime, prime);
 	}
+	friend FiniteFieldElement operator+(const int scalar, const FiniteFieldElement& other) {
+		return FiniteFieldElement((scalar + other.getValue()) % other.getPrime(), other.getPrime());
+	}
 	FiniteFieldElement operator-(const FiniteFieldElement& other) const {
 		return FiniteFieldElement((value - other.getValue() + prime) % prime, prime);
 	}
 	FiniteFieldElement operator-(const int scalar) const {
 		return FiniteFieldElement((value - scalar + prime) % prime, prime);
 	}
+	friend FiniteFieldElement operator-(const int scalar, const FiniteFieldElement& other) {
+		return FiniteFieldElement((scalar - other.getValue() + other.getPrime()) % other.getPrime(), other.getPrime());
+	}
 	FiniteFieldElement operator*(const FiniteFieldElement& other) const {
 		return FiniteFieldElement((value * other.getValue()) % prime, prime);
 	}
 	FiniteFieldElement operator*(const int scalar) const {
 		return FiniteFieldElement((value * scalar) % prime, prime);
+	}
+	friend FiniteFieldElement operator*(const int scalar, const FiniteFieldElement& other) {
+		return FiniteFieldElement((scalar * other.getValue()) % other.getPrime(), other.getPrime());
 	}
 	FiniteFieldElement operator/(const FiniteFieldElement& other) const {
 		return *this * other.Inverse();
@@ -100,6 +113,9 @@ public:
 			};
 		return __eq__(other);
 	}
+	bool operator==(const int scalar) const {
+		return value == scalar;
+	}
 	// Inequality operator:
 	bool operator!=(const FiniteFieldElement& other) const {
 		// Lambda function to check inequality of two FiniteFieldElement objects.
@@ -109,6 +125,9 @@ public:
 			return value != other.getValue() || prime != other.getPrime();
 			};
 		return __ne__(other);
+	}
+	bool operator!=(const int scalar) const {
+		return value != scalar;
 	}
 
 	// Power function:
