@@ -60,6 +60,10 @@ void eccTest() {
 			cout << "Point: (" << point.x.getValue() << ", " << point.y.getValue() << ")" << endl;
 		}
 	}
+	ECC ecc = ECC(FiniteFieldElement(15, prime), FiniteFieldElement(86, prime), 0, 7, prime);
+	cout << "ECC Order: " << ecc.order << endl;
+
+	//SECP256K1 secp256k1 = SECP256K1();
 }
 
 int main() {

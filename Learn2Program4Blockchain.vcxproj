@@ -132,6 +132,7 @@
     <ClInclude Include="FiniteField.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BigInteger.h" />
     <ClCompile Include="ECCTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
