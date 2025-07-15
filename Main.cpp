@@ -175,11 +175,16 @@ int bigIntegerTest() {
 	inc--;
 	cout << "a-- = " << inc << endl;
 
+	// 十六进制转换测试
+	BigInteger hexNum("b16f81798");
+	hexNum.parseHexToDecimal();
+	cout << "十六进制'b16f81798'转换测试: " << hexNum << endl;
+
 	// 输入输出流测试
-	/*cout << "请输入一个大整数: ";
+	cout << "请输入一个大整数: ";
 	BigInteger input;
 	cin >> input;
-	cout << "你输入的是: " << input << endl;*/
+	cout << "你输入的是: " << input << endl;
 
 	cout << "BigInteger 测试结束" << endl;
 	return 0;

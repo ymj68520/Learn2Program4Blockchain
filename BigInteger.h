@@ -32,8 +32,8 @@ private:
 		if (lhs.value > rhs.value) return 1;
 		return 0;
 	}
-public:
 	BigInteger _pow(const BigInteger& num1, const int& index);
+	//void _parseHexToDecimal() {}; // 函数内部自解析函数
 
 public:
 	BigInteger(); // Default constructor for zero
@@ -89,6 +89,9 @@ public:
 		return in;
 	}
 	std::string asString() const; // Convert to string representation
+	BigInteger __parseHexToDecimal(const std::string& hexStr) const; // Convert hexadecimal string to decimal BigInteger
+	void parseHexToDecimal(); // 函数内部自解析函数
+	BigInteger myPow(const int& index) const; // Power function
 
 	void signSetter(Sign s) { sign = s; }
 	void valueSetter(std::string s) { value = s; }

@@ -331,7 +331,7 @@ BigInteger& BigInteger::operator/=(const BigInteger& other) {
 			int mid = left + (right - left) / 2;
 			BigInteger midValue = BigInteger(mid) * other * _pow(10, condition);
 			//if (absCompare(*this, other * mid * _pow(10, condition)) >= 0)
-			if (absCompare(*this, midValue) >= 0) 
+			if (absCompare(*this, midValue) >= 0)
 				left = mid;
 
 			else
@@ -418,6 +418,41 @@ BigInteger BigInteger::_pow(const BigInteger& num, const int& index) {
 		return temp * temp * num;
 	else
 		return temp * temp;
+}
+BigInteger BigInteger::__parseHexToDecimal(const std::string& hexStr) const {
+	BigInteger result(0),base(16);
+	int len = hexStr.length();
+	for (int i = 0; i < len; ++i) {
+		char c = hexStr[len - 1 - i];
+		int digit;
+		if (c >= '0' && c <= '9') {
+			digit = c - '0';
+		}
+		else if (c >= 'A' && c <= 'F') {
+			digit = c - 'A' + 10;
+		}
+		else if (c >= 'a' && c <= 'f') {
+			digit = c - 'a' + 10;
+		}
+		else {
+			throw std::invalid_argument("Invalid hexadecimal character: " + std::string(1, c));
+		}
+		//result += BigInteger(digit) * static_cast<int>(pow(16, i)); // 存在整数溢出问题，改用BigInteger中的pow函数
+		result += BigInteger(digit) * base.myPow(i); // 使用myPow函数来计算16的i次方
+	}
+	return result;
+}
+
+BigInteger BigInteger::myPow(const int& index) const {  
+	if (index < 0) throw std::invalid_argument("Exponent must be non-negative.");  
+	if (index == 0) return BigInteger(1);  
+	BigInteger temp = *this;  
+	return temp._pow(temp, index);
+}
+
+void BigInteger::parseHexToDecimal() {
+	BigInteger temp = __parseHexToDecimal(value);
+	*this = temp;
 }
 
 //std::ostream& operator<<(std::ostream& out, const BigInteger& num) {
