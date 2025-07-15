@@ -26,10 +26,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ECCTest.cpp">
+    <ClCompile Include="BigInteger.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BigInteger.h">
+    <ClCompile Include="BigInt.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BigInteger.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
   </ItemGroup>

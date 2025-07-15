@@ -66,8 +66,8 @@ private:
 	FiniteFieldElement x;
 	FiniteFieldElement y;
 	//int prime = 2 ^ 256 - 2 ^ 32 - 997;
-	int prime = (1ULL << 256) - (1ULL << 32) - 977;
-
+	//int prime = (1ULL << 256) - (1ULL << 32) - 977;
+	int prime = 213;
 public:
 	int order = parseHexToDecimal("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
 	SECP256K1()
