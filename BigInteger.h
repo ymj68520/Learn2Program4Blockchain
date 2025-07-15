@@ -1,4 +1,9 @@
 #pragma once
+#ifndef _USE_BIGINTEGER_H
+#define _USE_BIGINTEGER_H 0x9994
+#endif // !_USE_BIGINTEGER_
+
+
 #include <iostream>
 #include <string>
 #include <vector>

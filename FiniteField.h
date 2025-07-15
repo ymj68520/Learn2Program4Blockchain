@@ -1,5 +1,8 @@
 #pragma once
+#ifndef _USE_FINITE_FIELD_
 #define _USE_FINITE_FIELD_H 0x9992
+#endif // !_USE_FINITE_FIELD_
+
 #include <iostream>
 #include <climits>
 

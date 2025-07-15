@@ -24,6 +24,9 @@
     <ClInclude Include="ECC.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SECP256K1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BigInteger.h">

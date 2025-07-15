@@ -1,5 +1,6 @@
 #include "BigInteger.h"
 
+
 BigInteger::BigInteger() : value("0"), sign(Sign::ZERO) {}
 BigInteger::BigInteger(const long num) : BigInteger(static_cast<long long>(num)) {}
 BigInteger::BigInteger(const unsigned long num) : BigInteger(static_cast<unsigned long long>(num)) {}
@@ -420,7 +421,7 @@ BigInteger BigInteger::_pow(const BigInteger& num, const int& index) {
 		return temp * temp;
 }
 BigInteger BigInteger::__parseHexToDecimal(const std::string& hexStr) const {
-	BigInteger result(0),base(16);
+	BigInteger result(0), base(16);
 	int len = hexStr.length();
 	for (int i = 0; i < len; ++i) {
 		char c = hexStr[len - 1 - i];
@@ -443,10 +444,10 @@ BigInteger BigInteger::__parseHexToDecimal(const std::string& hexStr) const {
 	return result;
 }
 
-BigInteger BigInteger::myPow(const int& index) const {  
-	if (index < 0) throw std::invalid_argument("Exponent must be non-negative.");  
-	if (index == 0) return BigInteger(1);  
-	BigInteger temp = *this;  
+BigInteger BigInteger::myPow(const int& index) const {
+	if (index < 0) throw std::invalid_argument("Exponent must be non-negative.");
+	if (index == 0) return BigInteger(1);
+	BigInteger temp = *this;
 	return temp._pow(temp, index);
 }
 

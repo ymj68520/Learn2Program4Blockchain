@@ -130,6 +130,7 @@
     <ClInclude Include="ECC.h" />
     <ClInclude Include="EllipticPoint.h" />
     <ClInclude Include="FiniteField.h" />
+    <ClInclude Include="SECP256K1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BigInt.h" />
