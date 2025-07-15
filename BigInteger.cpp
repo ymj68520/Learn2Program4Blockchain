@@ -194,8 +194,8 @@ BigInteger& BigInteger::operator-=(const BigInteger& other) {
 	result.reserve((len1 > len2 ? len1 : len2) + 5); // Reserve space for the result
 
 	while (len1 >= 0 || len2 >= 0) {
-		int num1 = len1 >= 0 ? value[len1--] + '0' : 0;
-		int num2 = len2 >= 0 ? other.value[len2--] + '0' : 0;
+		int num1 = len1 >= 0 ? value[len1--] - '0' : 0;
+		int num2 = len2 >= 0 ? other.value[len2--] - '0' : 0;
 		int res = changeSign * (num1 - num2) + borrow;
 		if (res < 0) {
 			borrow = -1;
@@ -324,7 +324,7 @@ BigInteger& BigInteger::operator/=(const BigInteger& other) {
 	std::string result;
 	result.reserve(len1);
 
-	while (len1 - len2 - count > 0) {
+	while (len1 - len2 - count >= 0) {
 		int left = -1;
 		int right = 10;
 		while (left + 1 < right) { // 使用二分法试乘

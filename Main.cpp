@@ -131,8 +131,8 @@ int bigIntegerTest() {
 	// 除法测试
 	BigInteger quot = b / c;
 	cout << "b / c = " << quot << endl;
-	prod = f / e; // 测试负数除法
-	cout << "f / e = " << prod << endl;
+	quot = f / e; // 测试负数除法
+	cout << "f / e = " << quot << endl;
 
 	// 取模测试
 	BigInteger mod = b % c;
@@ -160,6 +160,9 @@ int bigIntegerTest() {
 	cout << "zero = " << zero << endl;
 	cout << "one = " << one << endl;
 	cout << "a + zero = " << (a + zero) << endl;
+	cout << "a - zero = " << (a - zero) << endl;
+	cout << "a * zero = " << (a * zero) << endl;
+	cout << "a + one = " << (a + one) << endl;
 	cout << "a * one = " << (a * one) << endl;
 
 	// 自增自减测试
