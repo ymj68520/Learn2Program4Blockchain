@@ -5,24 +5,25 @@
 
 #include <iostream>
 #include <climits>
+#include "BigInteger.h"
 
 class FiniteFieldElement {
 private:
 	// The value of the element in the finite field
-	int value;
+	BigInteger value;
 	// The prime number that defines the finite field
-	int prime = 223;
+	BigInteger prime = 223;
 
 public:
 	// Constructor:
 	FiniteFieldElement() : value(0) {} // Default constructor
 	// Constructor with prime:
-	FiniteFieldElement(int value) : value(value) {
+	FiniteFieldElement(BigInteger value) : value(value) {
 		while (value < 0) value += prime;
 		while (value >= prime) value -= prime;
 	}
 	// Creates a finite field element with the given value and prime.
-	FiniteFieldElement(int num, int prime) {
+	FiniteFieldElement(BigInteger num, BigInteger prime) {
 		if (num < 0 || num >= prime) {
 			throw std::invalid_argument("num must be in the range 0 to prime-1");
 		}
@@ -51,7 +52,7 @@ public:
 		return *this;
 	}
 	operator int() const {
-		return value;
+		return value.toInt();
 	}
 
 	// Addition, subtraction, multiplication, and division operators:
@@ -90,7 +91,7 @@ public:
 	}
 
 	// modulus operator:
-	FiniteFieldElement operator%(const int prime) const {
+	FiniteFieldElement operator%(const BigInteger prime) const {
 		return FiniteFieldElement(value % prime, prime);
 	}
 
@@ -117,7 +118,7 @@ public:
 		return __eq__(other);
 	}
 	bool operator==(const int scalar) const {
-		return value == scalar;
+		return value == BigInteger(scalar);
 	}
 	// Inequality operator:
 	bool operator!=(const FiniteFieldElement& other) const {
@@ -130,26 +131,26 @@ public:
 		return __ne__(other);
 	}
 	bool operator!=(const int scalar) const {
-		return value != scalar;
+		return value != BigInteger(scalar);
 	}
 
 	// Power function:
 	// C++ does not support overloading power operators.
-	FiniteFieldElement Epow(int p) const {
+	FiniteFieldElement Epow(BigInteger p) const {
 		if (p < 0) {
 			throw std::invalid_argument("Exponent must be non-negative");
 		}
-		int result = 1;
-		for (int i = 0; i < p; ++i) {
+		BigInteger result = 1;
+		for (BigInteger i = 0; i < p; ++i) {
 			result = (result * value) % prime;
 		}
 		return FiniteFieldElement(result, prime);
 	}
 	// Power function with negative exponent:
-	FiniteFieldElement pow(int p) const {
-		int fp = p;
+	FiniteFieldElement pow(BigInteger p) const {
+		BigInteger fp = p;
 		if (fp < 0) {
-			fp = 0 - fp;
+			fp = - fp;
 		}
 		auto result = Epow(fp);
 		if (p != fp) {
@@ -159,7 +160,7 @@ public:
 	}
 	// Inverse Element Finder:
 	FiniteFieldElement Inverse() const {
-		for (int i = 1; i < prime; ++i) {
+		for (BigInteger i = 1; i < prime; ++i) {
 			if ((value * i) % prime == 1) {
 				return FiniteFieldElement(i, prime);
 			}
@@ -178,10 +179,10 @@ public:
 		return os;
 	}
 	// getters:
-	int getValue() const {
+	BigInteger getValue() const {
 		return value;
 	}
-	int getPrime() const {
+	BigInteger getPrime() const {
 		return prime;
 	}
 };

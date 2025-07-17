@@ -7,13 +7,14 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <climits>
 
 class BigInteger {
 public:
 	enum class Sign {
 		NEGATIVE = '-', ZERO = '0', POSITIVE = '+'
 	};
-
+	std::string _MAX_INT_ = std::string("2147483647");
 private:
 	std::string value; // Store the number as a string for arbitrary precision
 	Sign sign;
@@ -82,6 +83,7 @@ public:
 	BigInteger operator++(int); // Post-increment operator
 	BigInteger& operator--();	// Pre-decrement operator
 	BigInteger operator--(int); // Post-decrement operator
+
 	friend std::ostream& operator<<(std::ostream& out, const BigInteger& num) {
 		out << num.asString();
 		return out;
@@ -96,6 +98,7 @@ public:
 	BigInteger __parseHexToDecimal(const std::string& hexStr) const; // Convert hexadecimal string to decimal BigInteger
 	BigInteger parseHexToDecimal(); // 函数内部自解析函数
 	BigInteger myPow(const int& index) const; // Power function
+	int toInt() const; // Convert to int
 
 	void signSetter(Sign s) { sign = s; }
 	void valueSetter(std::string s) { value = s; }

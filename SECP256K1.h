@@ -28,9 +28,6 @@ public:
 		// Initialize the base point P with Gx and Gy
 		P = Point<SECP256K1IFET<BigInteger>>(x, y, a, b, prime);
 	}
-	// Copy constructor
-	SECP256K1(const SECP256K1& other) : ECC(other), x(other.x), y(other.y), P(other.P) {
-	}
 	// Assignment operator
 	SECP256K1& operator=(const SECP256K1& other) {
 		if (this != &other) {
@@ -43,16 +40,17 @@ public:
 	}
 };
 
-template<typename T>
-class SECP256K1IFET : private FiniteFieldElement {
-private:
-	T value;
-	T prime;
-
-public:
-	FiniteFieldElement(const T& num, const T& prime) : value(num), prime(prime) {
-		if (num < 0 || num >= prime) {
-			throw std::invalid_argument("num must be in the range 0 to prime-1");
-		}
-	}
-};
+// 重构FiniteFieldElement，弃用此类
+//template<typename T>
+//class SECP256K1IFET : private FiniteFieldElement {
+//private:
+//	T value;
+//	T prime;
+//
+//public:
+//	FiniteFieldElement(const T& num, const T& prime) : value(num), prime(prime) {
+//		if (num < 0 || num >= prime) {
+//			throw std::invalid_argument("num must be in the range 0 to prime-1");
+//		}
+//	}
+//};

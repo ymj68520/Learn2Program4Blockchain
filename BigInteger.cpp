@@ -455,6 +455,19 @@ BigInteger BigInteger::parseHexToDecimal() {
 	return temp;
 }
 
+int BigInteger::toInt() const { // Convert to int
+	if (sign == Sign::ZERO) return 0;
+
+	if (absCompare(*this, BigInteger(_MAX_INT_)) > 0) {
+		throw std::overflow_error("Value exceeds the range of int");
+	}
+
+	if (sign == Sign::NEGATIVE) {
+		return -std::stoi(value);
+	}
+	return std::stoi(value);
+}
+
 //std::ostream& operator<<(std::ostream& out, const BigInteger& num) {
 //	out << num.asString();
 //	return out;
