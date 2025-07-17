@@ -3,7 +3,6 @@
 #define _USE_BIGINTEGER_H 0x9994
 #endif // !_USE_BIGINTEGER_
 
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -95,7 +94,7 @@ public:
 	}
 	std::string asString() const; // Convert to string representation
 	BigInteger __parseHexToDecimal(const std::string& hexStr) const; // Convert hexadecimal string to decimal BigInteger
-	void parseHexToDecimal(); // 函数内部自解析函数
+	BigInteger parseHexToDecimal(); // 函数内部自解析函数
 	BigInteger myPow(const int& index) const; // Power function
 
 	void signSetter(Sign s) { sign = s; }

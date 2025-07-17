@@ -6,16 +6,22 @@
 
 class SECP256K1 : private ECC {
 private:
-	SECP256K1IFET<BigInteger> x;
-	SECP256K1IFET<BigInteger> y;
-	//int prime = 2 ^ 256 - 2 ^ 32 - 997;
-	BigInteger base = BigInteger(2);
-	BigInteger prime = base.myPow(256) - base.myPow(32) - BigInteger(977);
-	//int prime = (1ULL << 256) - (1ULL << 32) - 977;
-	//int prime = 213;
+	const static SECP256K1IFET<BigInteger> Gx;
+	const static SECP256K1IFET<BigInteger> Gy;
+	const static BigInteger baseX;
+	const static BigInteger baseY;
+	// int base = 2;
+	const static BigInteger base;
+	const int a = 0;
+	const int b = 7;
+
 public:
-	
+	//int prime = 2 ^ 256 - 2 ^ 32 - 997;
+	const static BigInteger prime;
+	// Ñ­»·ÈºµÄ½×
+	const static BigInteger N;
 };
+
 template<typename T>
 class SECP256K1IFET : private FiniteFieldElement {
 private:

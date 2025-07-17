@@ -1,6 +1,5 @@
 #include "BigInteger.h"
 
-
 BigInteger::BigInteger() : value("0"), sign(Sign::ZERO) {}
 BigInteger::BigInteger(const long num) : BigInteger(static_cast<long long>(num)) {}
 BigInteger::BigInteger(const unsigned long num) : BigInteger(static_cast<unsigned long long>(num)) {}
@@ -451,9 +450,9 @@ BigInteger BigInteger::myPow(const int& index) const {
 	return temp._pow(temp, index);
 }
 
-void BigInteger::parseHexToDecimal() {
+BigInteger BigInteger::parseHexToDecimal() {
 	BigInteger temp = __parseHexToDecimal(value);
-	*this = temp;
+	return temp;
 }
 
 //std::ostream& operator<<(std::ostream& out, const BigInteger& num) {

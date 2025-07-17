@@ -137,6 +137,7 @@
     <ClCompile Include="BigInteger.cpp" />
     <ClCompile Include="BigInteger.h" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SECP256K1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

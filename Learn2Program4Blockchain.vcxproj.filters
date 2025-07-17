@@ -41,5 +41,8 @@
     <ClCompile Include="BigInteger.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="SECP256K1.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
