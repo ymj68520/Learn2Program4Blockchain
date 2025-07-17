@@ -32,10 +32,10 @@ public:
 	T y; // y-coordinate
 	int a; // Coefficient a of the elliptic curve equation
 	int b; // Coefficient b of the elliptic curve equation
-	int prime; // Prime number defining the finite field
+	T prime; // Prime number defining the finite field
 	bool isInfinity; // Flag for point at infinity
 
-	Point(T x, T y, int a, int b, int p) : x(x), y(y), a(a), b(b), prime(p), isInfinity(false) {
+	Point(T x, T y, int a, int b, T p) : x(x), y(y), a(a), b(b), prime(p), isInfinity(false) {
 		// Check if the point satisfies the elliptic curve equation y^2 = x^3 + ax + b
 		//try {
 		if (x == 0 && y == 0) {
